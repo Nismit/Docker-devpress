@@ -27,7 +27,7 @@ $ chmod u+x wp-setup.sh
 $ ./wp-setup.sh
 ```
 
-After install, you can access to http://localhost:80 (http://localhost:80)
+After install, you can access to http://localhost:8080 (http://localhost:8080)
 
 ## How to stop
 On the terminal, press `Control` + `c`
