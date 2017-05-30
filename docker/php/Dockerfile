@@ -7,7 +7,7 @@ FROM php:fpm
 RUN apt-get update \
   && apt-get -y install \
   zlib1g-dev libmemcached-dev libmemcached11 libmemcachedutil2 \
-  libjpeg62-turbo-dev libpng12-dev \
+  libjpeg62-turbo-dev libpng12-dev mysql-client \
   && pecl install memcached \
   && docker-php-ext-configure gd --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
   && docker-php-ext-install gd mysqli opcache mbstring \
@@ -34,4 +34,3 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
   && chmod +x wp-cli.phar \
   && mv wp-cli.phar /usr/local/bin/wp \
   && wp --allow-root --version
-    

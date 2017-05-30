@@ -16,8 +16,15 @@ You can set up for development of WordPress environment on Docker.
 ## Installation
 
 ```bash
-$ cd docker-wordpress/docker
+$ cd Docker-devpress
 $ docker-compose up --build
+```
+
+## Install WordPress
+
+```bash
+$ chmod u+x wp-setup.sh
+$ ./wp-setup.sh
 ```
 
 After install, you can access to http://localhost:80 (http://localhost:80)
