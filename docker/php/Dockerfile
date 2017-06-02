@@ -1,5 +1,4 @@
 # php-fpm 
-# NOTICE, YOU SHOULD FIX PHP VERSION, IT ALWAYS GET LATEST VERSION
 FROM php:fpm
 
 # install memcached extension for php
@@ -7,7 +6,7 @@ FROM php:fpm
 RUN apt-get update \
   && apt-get -y install \
   zlib1g-dev libmemcached-dev libmemcached11 libmemcachedutil2 \
-  libjpeg62-turbo-dev libpng12-dev mysql-client \
+  libjpeg62-turbo-dev libpng12-dev mysql-client git \
   && pecl install memcached \
   && docker-php-ext-configure gd --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
   && docker-php-ext-install gd mysqli opcache mbstring \
