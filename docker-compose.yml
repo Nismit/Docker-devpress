@@ -49,7 +49,4 @@ services:
       - "3001:3001"
     volumes:
       - ./public_html/:/var/www/html
-    container_name: devpress_node 
-
-# volumes:
-#   db:
+    container_name: devpress_node
