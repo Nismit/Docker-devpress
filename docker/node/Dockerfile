@@ -1,7 +1,7 @@
 #node
 FROM node:latest
 
-RUN npm install gulp-cli bower -g \
+RUN npm install gulp-cli bower npm-check-updates -g \
   && npm -v \
   && gulp -v \
   && bower -v
