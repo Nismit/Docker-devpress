@@ -15,7 +15,7 @@ ADMIN_PASSWORD="password"
 ADMIN_EMAIL="local@admin.com"
 
 # Pre install plugin list
-PLUGINS=("wp-multibyte-patch","duplicate-post")
+PLUGINS=("wp-multibyte-patch" "duplicate-post")
 
 # Download Wordpress
 docker exec -it devpress_php wp --allow-root core download --locale=ja
