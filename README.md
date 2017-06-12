@@ -1,6 +1,10 @@
 # WordPress Development Environment for Docker
 You can set up for development of WordPress environment on Docker.
 
+## Notice
+All docker images are set `latest`.
+If you make this environment, you should set version each images.
+
 ## Software Included
 
 
@@ -141,4 +145,3 @@ aa91f7b50937        postgres:9.6.2      "docker-entrypoint..."   18 minutes ago 
 ```bash
 $ docker image prune
 ```
-
