@@ -1,4 +1,4 @@
-# php-fpm 
+# php-fpm
 FROM php:fpm
 
 # install memcached extension for php
@@ -10,7 +10,11 @@ RUN apt-get update \
   && pecl install memcached \
   && docker-php-ext-configure gd --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
   && docker-php-ext-install gd mysqli opcache mbstring \
-  && echo extension=memcached.so >> /usr/local/etc/php/conf.d/memcached.ini \
+  && { \
+    echo 'extension=memcached.so'; \
+    echo 'session.save_handler = memcached'; \
+    echo 'session.save_path = memcached:11211'; \
+    } > /usr/local/etc/php/conf.d/memcached.ini \
   && docker-php-ext-enable memcached \
   && { \
     echo 'opcache.memory_consumption=128'; \
@@ -19,7 +23,7 @@ RUN apt-get update \
     echo 'opcache.revalidate_freq=2'; \
     echo 'opcache.fast_shutdown=1'; \
     echo 'opcache.enable_cli=1'; \
-  } > /usr/local/etc/php/conf.d/opcache-recommended.ini \  
+  } > /usr/local/etc/php/conf.d/opcache-recommended.ini \
   && docker-php-ext-enable opcache \
   && apt-get remove -y zlib1g-dev libmemcached-dev \
   && apt-get autoremove -y \
