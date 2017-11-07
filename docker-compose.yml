@@ -26,7 +26,6 @@ services:
       - ./public_html/:/var/www/html
     depends_on:
       - php
-      - node
     container_name: devpress_server
 
   php:
@@ -41,12 +40,3 @@ services:
       MYSQL_USER: mysql_user
       MYSQL_PASSWORD: mysql_password
     container_name: devpress_php
-
-  node:
-    build: ./docker/node
-    ports:
-      - "3000:3000"
-      - "3001:3001"
-    volumes:
-      - ./public_html/:/var/www/html
-    container_name: devpress_node
