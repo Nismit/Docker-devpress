@@ -35,7 +35,7 @@ RUN apt-get update \
     && rm -rf /tmp/pear
 
 # add php.ini file
-# ADD php.ini /usr/local/etc/php/conf.d/php.ini
+ADD php.ini /usr/local/etc/php/conf.d/php.ini
 
 # install composer and wp-cli
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
