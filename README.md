@@ -1,5 +1,8 @@
 # WordPress Development Environment for Docker
 You can set up for development of WordPress environment on Docker.
+I think that Node container does not need in this time because in front-end most of developers have already installed Node.js in local development.
+Basically, npm packages does not need to install in global which mean most of plugins can manage in local package.json.
+This is why I removed Node container.
 
 ## Notice
 All docker images are set `latest`.
@@ -12,7 +15,6 @@ If you make this environment, you should set version each images.
 1. nginx (https://hub.docker.com/_/nginx/)
 1. php (https://hub.docker.com/_/php/)
 1. MariaDB (https://hub.docker.com/_/mariadb/)
-1. Node (https://hub.docker.com/_/node/)
 1. Composer
 1. WP-CLI
 
@@ -54,31 +56,9 @@ Stopping devpress_mysql ... done
 Stopping devpress_memcached ... done
 ```
 
-
-## Example of installing Sage
-
-An example, to install WP Starter theme Sage(https://github.com/roots/sage) ver 8.5.1
-
-First, you should finish to install WordPress, follow the installation
-
-```bash
-$ docker exec -it devpress_php composer create-project roots/sage wp-content/themes/example 8.5.1
-## Install npm packages
-$ docker-compose run --rm node bash -c "cd wp-content/themes/example/ && npm install"
-## Install bower components
-$ docker-compose run --rm node bash -c "cd wp-content/themes/example/ && bower --allow-root install"
-## Compile Gulp
-$ docker-compose run --rm node bash -c "cd wp-content/themes/example/ && gulp"
-## Watch Gulp
-$ docker-compose run --rm node bash -c "cd wp-content/themes/example/ && gulp watch"
-```
-
-
 ## Delete
 
 Use `rm` or `prune` command. If you want to delete container(s) or image(s), follow the command below.
-
-
 
 
 ### Delete all containers which are not using or active
