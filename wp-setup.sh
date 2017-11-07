@@ -18,16 +18,19 @@ ADMIN_EMAIL="local@admin.com"
 PLUGINS=("wp-multibyte-patch" "duplicate-post")
 
 # Download Wordpress
-docker exec -it devpress_php wp --allow-root core download --locale=ja
+docker-compose exec php wp --allow-root core download
+
+# Another example for downloading WordPress
+# docker-compose exec php wp --allow-root core download --locale=ja
 
 # SetUp wp-config
-docker exec -it devpress_php wp --allow-root core config --dbname=${DBNAME} --dbuser=${DBUSER} --dbpass=${DBPASSWORD} --dbhost=${DBHOST} --dbprefix=${DBPREFIX}
+docker-compose exec php wp --allow-root core config --dbname=${DBNAME} --dbuser=${DBUSER} --dbpass=${DBPASSWORD} --dbhost=${DBHOST} --dbprefix=${DBPREFIX}
 
 # Wordpress Install
-docker exec -it devpress_php wp --allow-root core install --url=${SITE_URL} --title=${SITE_TITLE} --admin_user=${ADMIN_USER} --admin_password=${ADMIN_PASSWORD} --admin_email=${ADMIN_EMAIL}
+docker-compose exec php wp --allow-root core install --url=${SITE_URL} --title=${SITE_TITLE} --admin_user=${ADMIN_USER} --admin_password=${ADMIN_PASSWORD} --admin_email=${ADMIN_EMAIL}
 
 # Plugins Download & Install
 for plugin in ${PLUGINS[@]}
 do
-  docker exec -it devpress_php wp --allow-root plugin install $plugin --activate
+  docker-compose exec php wp --allow-root plugin install $plugin --activate
 done
