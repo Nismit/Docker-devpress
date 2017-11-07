@@ -34,9 +34,6 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /tmp/pear
 
-# add php.ini file
-ADD php.ini /usr/local/etc/php/conf.d/php.ini
-
 # install composer and wp-cli
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
   && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
