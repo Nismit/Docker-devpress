@@ -13,7 +13,7 @@ RUN apt-get update \
         libpng12-dev \
         git \
     && pecl install memcached \
-    && docker-php-ext-install gd mysqli opcache mbstring \
+    && docker-php-ext-install gd mysqli pdo pdo_mysql opcache mbstring \
     && docker-php-ext-configure gd --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && { \
       echo 'extension=memcached.so'; \
