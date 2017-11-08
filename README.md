@@ -15,8 +15,9 @@ If you make this environment, you should set version each images.
 1. nginx (https://hub.docker.com/_/nginx/)
 1. php (https://hub.docker.com/_/php/)
 1. MariaDB (https://hub.docker.com/_/mariadb/)
-1. Composer
-1. WP-CLI
+1. Mailcatcher (https://hub.docker.com/r/schickling/mailcatcher/)
+1. Composer (https://getcomposer.org/)
+1. WP-CLI (http://wp-cli.org/)
 
 
 ## Installation
