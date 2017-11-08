@@ -2,7 +2,7 @@
 FROM php:fpm
 
 # install PHP extensions
-# gd, mysql-cli, memcached, opcached, git
+# gd, mysql-cli, memcached, opcached, git, ssmtp
 RUN apt-get update \
     && apt-get -y install \
         libmemcached11 \
@@ -13,9 +13,11 @@ RUN apt-get update \
         libjpeg62-turbo-dev \
         libpng12-dev \
         libz-dev \
+        libxml2-dev \
+        ssmtp \
         git \
     && pecl install memcached \
-    && docker-php-ext-install gd mysqli pdo pdo_mysql opcache mbstring \
+    && docker-php-ext-install gd mysqli pdo pdo_mysql opcache mbstring soap \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && { \
       echo 'extension=memcached.so'; \
@@ -30,8 +32,9 @@ RUN apt-get update \
       echo 'opcache.fast_shutdown=1'; \
       echo 'opcache.enable_cli=1'; \
       } > /usr/local/etc/php/conf.d/opcache-recommended.ini \
+    && echo 'mailhub=mailcatcher:1025\nUseTLS=NO\nFromLineOverride=YES' > /etc/ssmtp/ssmtp.conf \
     && docker-php-ext-enable opcache memcached \
-    && apt-get remove -y build-essential libz-dev libmemcached-dev \
+    && apt-get remove -y build-essential libz-dev libmemcached-dev libxml2-dev \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /tmp/pear
