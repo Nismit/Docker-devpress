@@ -1,24 +1,33 @@
 # php-fpm
-FROM php:fpm
+FROM php:fpm-alpine
+
+ENV MEMCACHED_DEPS \
+      zlib-dev \
+      libmemcached-dev \
+      cyrus-sasl-dev
 
 # install PHP extensions
-# gd, mysql-cli, memcached, opcached, git, ssmtp
-RUN apt-get update \
-    && apt-get -y install \
-        libmemcached11 \
-        libmemcachedutil2 \
-        libmemcached-dev \
+# gd, mysql-cli, memcached, opcached, ssmtp
+RUN set -ex \
+    && apk add --no-cache --update \
+        bash \
         mysql-client \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng12-dev \
-        libz-dev \
-        libxml2-dev \
         ssmtp \
-        git \
+        libmemcached \
+        freetype \
+        libjpeg-turbo \
+        libpng \
+    && apk add --no-cache --update --virtual .phpize-deps \
+        $PHPIZE_DEPS \
+    && apk add --no-cache --update --virtual .build-deps \
+        freetype-dev \
+        libjpeg-turbo-dev \
+        libpng-dev \
+        libxml2-dev \
+        $MEMCACHED_DEPS \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include --with-png-dir=/usr/include --with-jpeg-dir=/usr/include \
+    && docker-php-ext-install gd mysqli opcache mbstring soap \
     && pecl install memcached \
-    && docker-php-ext-install gd mysqli pdo pdo_mysql opcache mbstring soap \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && { \
       echo 'extension=memcached.so'; \
       echo 'session.save_handler = memcached'; \
@@ -34,10 +43,7 @@ RUN apt-get update \
       } > /usr/local/etc/php/conf.d/opcache-recommended.ini \
     && echo 'mailhub=mailcatcher:1025\nUseTLS=NO\nFromLineOverride=YES' > /etc/ssmtp/ssmtp.conf \
     && docker-php-ext-enable opcache memcached \
-    && apt-get remove -y build-essential libz-dev libmemcached-dev libxml2-dev \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && rm -rf /tmp/pear
+    && apk del .phpize-deps .build-deps
 
 # install composer and wp-cli
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
