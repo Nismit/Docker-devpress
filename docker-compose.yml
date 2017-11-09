@@ -2,7 +2,7 @@ version: '3'
 
 services:
   memcached:
-    image: memcached:latest
+    image: memcached:alpine
 
   mysql:
     image: mariadb
